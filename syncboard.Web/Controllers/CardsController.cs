@@ -20,8 +20,7 @@ public class CardsController(DatabaseContext context) : ControllerBase
            .Select(c => new CardDto
            {
                Id = c.Id,
-               Title = c.Title,
-               Description = c.Description,
+               Content = c.Content,
                Column = new CardDto.ColumnInfo
                {
                    Id = c.Column.Id,
@@ -40,8 +39,7 @@ public class CardsController(DatabaseContext context) : ControllerBase
             .Select(c => new CardDto
             {
                 Id = c.Id,
-                Title = c.Title,
-                Description = c.Description,
+                Content = c.Content,
                 Column = new CardDto.ColumnInfo
                 {
                     Id = c.Column.Id,
@@ -67,8 +65,7 @@ public class CardsController(DatabaseContext context) : ControllerBase
             return NotFound();
         }
 
-        cardToUpdate.Title = card.Title;
-        cardToUpdate.Description = card.Description;
+        cardToUpdate.Content = card.Content;
         cardToUpdate.ColumnId = card.ColumnId;
 
         try
@@ -89,8 +86,7 @@ public class CardsController(DatabaseContext context) : ControllerBase
     {
         var newCard = new Card
         {
-            Title = card.Title,
-            Description = card.Description,
+            Content = card.Content,
             ColumnId = card.ColumnId
         };
         _context.Cards.Add(newCard);

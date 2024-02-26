@@ -11,7 +11,7 @@ using SyncBoard.Models;
 namespace syncboard.Web.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    [Migration("20240224233225_InitialCreate")]
+    [Migration("20240226205920_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -35,11 +35,7 @@ namespace syncboard.Web.Migrations
                     b.Property<int>("ColumnId")
                         .HasColumnType("integer");
 
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("Title")
+                    b.Property<string>("Content")
                         .IsRequired()
                         .HasColumnType("text");
 
@@ -54,29 +50,25 @@ namespace syncboard.Web.Migrations
                         {
                             Id = 1,
                             ColumnId = 1,
-                            Description = "This is the first card",
-                            Title = "First Card"
+                            Content = "This is the first card"
                         },
                         new
                         {
                             Id = 2,
                             ColumnId = 1,
-                            Description = "This is the second card",
-                            Title = "Second Card"
+                            Content = "This is the second card"
                         },
                         new
                         {
                             Id = 3,
                             ColumnId = 2,
-                            Description = "This is the third card",
-                            Title = "Third Card"
+                            Content = "This is the third card"
                         },
                         new
                         {
                             Id = 4,
                             ColumnId = 3,
-                            Description = "This is the fourth card",
-                            Title = "Fourth Card"
+                            Content = "This is the fourth card"
                         });
                 });
 

@@ -32,8 +32,7 @@ namespace syncboard.Web.Migrations
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    Title = table.Column<string>(type: "text", nullable: false),
-                    Description = table.Column<string>(type: "text", nullable: false),
+                    Content = table.Column<string>(type: "text", nullable: false),
                     ColumnId = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
@@ -59,13 +58,13 @@ namespace syncboard.Web.Migrations
 
             migrationBuilder.InsertData(
                 table: "Cards",
-                columns: new[] { "Id", "ColumnId", "Description", "Title" },
+                columns: new[] { "Id", "ColumnId", "Content" },
                 values: new object[,]
                 {
-                    { 1, 1, "This is the first card", "First Card" },
-                    { 2, 1, "This is the second card", "Second Card" },
-                    { 3, 2, "This is the third card", "Third Card" },
-                    { 4, 3, "This is the fourth card", "Fourth Card" }
+                    { 1, 1, "This is the first card" },
+                    { 2, 1, "This is the second card" },
+                    { 3, 2, "This is the third card" },
+                    { 4, 3, "This is the fourth card" }
                 });
 
             migrationBuilder.CreateIndex(

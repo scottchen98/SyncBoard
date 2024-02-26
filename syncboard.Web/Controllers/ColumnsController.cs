@@ -24,8 +24,7 @@ public class ColumnsController(DatabaseContext context) : ControllerBase
             Cards = c.Cards.Select(cd => new ColumnDto.CardInfo
             {
                 Id = cd.Id,
-                Title = cd.Title,
-                Description = cd.Description
+                Content = cd.Content
             }).ToList()
         }).ToListAsync();
     }
@@ -44,8 +43,7 @@ public class ColumnsController(DatabaseContext context) : ControllerBase
                 Cards = c.Cards.Select(cd => new ColumnDto.CardInfo
                 {
                     Id = cd.Id,
-                    Title = cd.Title,
-                    Description = cd.Description
+                    Content = cd.Content
                 }).ToList()
             }).FirstOrDefaultAsync();
 
