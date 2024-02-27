@@ -21,6 +21,7 @@ public class CardsController(DatabaseContext context) : ControllerBase
            {
                Id = c.Id,
                Content = c.Content,
+               Position = c.Position,
                Column = new CardDto.ColumnInfo
                {
                    Id = c.Column.Id,
@@ -40,6 +41,7 @@ public class CardsController(DatabaseContext context) : ControllerBase
             {
                 Id = c.Id,
                 Content = c.Content,
+                Position = c.Position,
                 Column = new CardDto.ColumnInfo
                 {
                     Id = c.Column.Id,
@@ -66,6 +68,7 @@ public class CardsController(DatabaseContext context) : ControllerBase
         }
 
         cardToUpdate.Content = card.Content;
+        cardToUpdate.Position = card.Position;
         cardToUpdate.ColumnId = card.ColumnId;
 
         try
@@ -87,6 +90,7 @@ public class CardsController(DatabaseContext context) : ControllerBase
         var newCard = new Card
         {
             Content = card.Content,
+            Position = card.Position,
             ColumnId = card.ColumnId
         };
         _context.Cards.Add(newCard);

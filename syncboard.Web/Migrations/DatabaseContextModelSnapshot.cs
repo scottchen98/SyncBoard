@@ -36,6 +36,9 @@ namespace syncboard.Web.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
+                    b.Property<int>("Position")
+                        .HasColumnType("integer");
+
                     b.HasKey("Id");
 
                     b.HasIndex("ColumnId");
@@ -47,25 +50,43 @@ namespace syncboard.Web.Migrations
                         {
                             Id = 1,
                             ColumnId = 1,
-                            Content = "This is the first card"
+                            Content = "Card 1",
+                            Position = 0
                         },
                         new
                         {
                             Id = 2,
                             ColumnId = 1,
-                            Content = "This is the second card"
+                            Content = "Card 2",
+                            Position = 1
                         },
                         new
                         {
                             Id = 3,
+                            ColumnId = 1,
+                            Content = "Card 3",
+                            Position = 2
+                        },
+                        new
+                        {
+                            Id = 5,
+                            ColumnId = 1,
+                            Content = "Card 4",
+                            Position = 3
+                        },
+                        new
+                        {
+                            Id = 6,
                             ColumnId = 2,
-                            Content = "This is the third card"
+                            Content = "Card 5",
+                            Position = 0
                         },
                         new
                         {
                             Id = 4,
                             ColumnId = 3,
-                            Content = "This is the fourth card"
+                            Content = "Card 6",
+                            Position = 0
                         });
                 });
 

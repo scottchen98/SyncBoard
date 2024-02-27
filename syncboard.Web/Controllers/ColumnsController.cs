@@ -21,11 +21,14 @@ public class ColumnsController(DatabaseContext context) : ControllerBase
         {
             Id = c.Id,
             Name = c.Name,
-            Cards = c.Cards.Select(cd => new ColumnDto.CardInfo
-            {
-                Id = cd.Id,
-                Content = cd.Content
-            }).ToList()
+            Cards = c.Cards
+                .Select(cd => new ColumnDto.CardInfo
+                {
+                    Id = cd.Id,
+                    Content = cd.Content,
+                    Position = cd.Position
+                })
+                .OrderBy(c => c.Position).ToList()
         }).ToListAsync();
     }
 
@@ -43,7 +46,8 @@ public class ColumnsController(DatabaseContext context) : ControllerBase
                 Cards = c.Cards.Select(cd => new ColumnDto.CardInfo
                 {
                     Id = cd.Id,
-                    Content = cd.Content
+                    Content = cd.Content,
+                    Position = cd.Position
                 }).ToList()
             }).FirstOrDefaultAsync();
 

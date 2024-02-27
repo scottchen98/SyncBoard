@@ -26,10 +26,12 @@ public class DatabaseContext : DbContext
 
         modelBuilder.Entity<Card>()
             .HasData(
-                new Card { Id = 1, Content = "This is the first card", ColumnId = 1 },
-                new Card { Id = 2, Content = "This is the second card", ColumnId = 1 },
-                new Card { Id = 3, Content = "This is the third card", ColumnId = 2 },
-                new Card { Id = 4, Content = "This is the fourth card", ColumnId = 3 }
+                new Card { Id = 1, Content = "Card 1", Position = 0, ColumnId = 1 },
+                new Card { Id = 2, Content = "Card 2", Position = 1, ColumnId = 1 },
+                new Card { Id = 3, Content = "Card 3", Position = 2, ColumnId = 1 },
+                new Card { Id = 5, Content = "Card 4", Position = 3, ColumnId = 1 },
+                new Card { Id = 6, Content = "Card 5", Position = 0, ColumnId = 2 },
+                new Card { Id = 4, Content = "Card 6", Position = 0, ColumnId = 3 }
             );
     }
 }
