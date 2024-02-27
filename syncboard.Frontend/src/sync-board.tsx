@@ -2,7 +2,7 @@ import { DragDropContext } from "react-beautiful-dnd";
 import type { OnDragEndResponder } from "react-beautiful-dnd";
 
 import { useState } from "react";
-import ColumnPanel from "./column";
+import ColumnPanel from "./column-panel";
 
 const startColumns = [
   {
