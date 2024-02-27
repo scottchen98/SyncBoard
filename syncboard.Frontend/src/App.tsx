@@ -74,10 +74,10 @@ export default function App() {
     } else {
       // If the card is dropped between columns
       const sourceColumn = columns.find(
-        (column) => column.id === sourceColumnId
+        (column) => column.id === sourceColumnId,
       );
       const destinationColumn = columns.find(
-        (column) => column.id === destinationColumnId
+        (column) => column.id === destinationColumnId,
       );
       if (!sourceColumn || !destinationColumn) return;
 
@@ -104,11 +104,11 @@ export default function App() {
 
   return (
     <>
-      <h1 className="text-5xl font-semibold text-center mt-8 mb-14">
+      <h1 className="mb-14 mt-8 text-center text-5xl font-semibold">
         SyncBoard
       </h1>
       <DragDropContext onDragEnd={onDragEnd}>
-        <div className="px-3 flex flex-col md:flex-row items-center justify-center md:items-start gap-10">
+        <div className="flex flex-col items-center justify-center gap-10 px-3 md:flex-row md:items-start">
           {columns.map((column) => (
             <Column key={column.id} column={column} />
           ))}
@@ -133,7 +133,7 @@ function Column({
     <Droppable droppableId={`${id}`}>
       {(provided, snapshot) => (
         <div
-          className="w-80 md:w-72 p-2 rounded-lg shadow-lg border-none"
+          className="w-80 rounded-lg border-none p-2 shadow-lg md:w-72"
           ref={provided.innerRef}
           style={{
             backgroundColor: snapshot.isDraggingOver
@@ -142,7 +142,7 @@ function Column({
           }}
           {...provided.droppableProps}
         >
-          <h2 className="text-2xl font-semibold mb-5">{name}</h2>
+          <h2 className="mb-5 text-2xl font-semibold">{name}</h2>
           <CardList cards={cards} />
           {provided.placeholder}
         </div>
@@ -168,7 +168,7 @@ function Card({
     <Draggable draggableId={`${card.id}`} index={index}>
       {(provided) => (
         <div
-          className="w-full border-none rounded-lg mb-2 break-words bg-slate-50 p-2"
+          className="mb-2 w-full break-words rounded-lg border-none bg-slate-50 p-2"
           ref={provided.innerRef}
           {...provided.draggableProps}
           {...provided.dragHandleProps}
