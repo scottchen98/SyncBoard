@@ -108,7 +108,7 @@ export default function App() {
         SyncBoard
       </h1>
       <DragDropContext onDragEnd={onDragEnd}>
-        <div className="flex justify-center items-start gap-10">
+        <div className="px-3 flex flex-col md:flex-row items-center justify-center md:items-start gap-10">
           {columns.map((column) => (
             <Column key={column.id} column={column} />
           ))}
@@ -133,7 +133,7 @@ function Column({
     <Droppable droppableId={`${id}`}>
       {(provided, snapshot) => (
         <div
-          className="w-64 p-2 rounded-lg shadow-lg border-none"
+          className="w-80 md:w-72 p-2 rounded-lg shadow-lg border-none"
           ref={provided.innerRef}
           style={{
             backgroundColor: snapshot.isDraggingOver
