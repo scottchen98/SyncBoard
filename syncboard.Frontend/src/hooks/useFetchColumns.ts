@@ -2,7 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 
 import type { Column } from "../types";
 
-export default function useFetchPolls() {
+export default function useFetchColumns() {
   const { data, isLoading, error } = useQuery({
     queryKey: ["columns"],
     queryFn: async () => {
