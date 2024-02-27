@@ -44,19 +44,61 @@ export default function App() {
 
   const onDragEnd: OnDragEndResponder = (result) => {
     const { source, destination } = result;
+
     if (!destination) return; // If dropped outside of a droppable area, do nothing
 
+    const sourceColumnId = +source.droppableId;
+    const destinationColumnId = +destination.droppableId;
+    const cardPositionSource = source.index;
+    const cardPositionDestination = destination.index;
     if (
-      source.droppableId === destination.droppableId &&
-      source.index === destination.index
-    ) {
+      sourceColumnId === destinationColumnId &&
+      cardPositionSource === cardPositionDestination
+    )
       return; // If the card is dropped in the same position, do nothing
-    }
 
-    if (source.droppableId === destination.droppableId) {
-      // If the card is dropped within the same column
+    // If the card is dropped within the same column
+    if (sourceColumnId === destinationColumnId) {
+      const column = columns.find((column) => column.id === sourceColumnId);
+      if (!column) return;
+      const newCards = [...column.cards];
+      const [removed] = newCards.splice(cardPositionSource, 1);
+      newCards.splice(cardPositionDestination, 0, removed);
+      const newColumn = {
+        ...column,
+        cards: newCards,
+      };
+      const newColumns = [...columns];
+      newColumns.splice(sourceColumnId - 1, 1, newColumn);
+      setColumns(newColumns);
     } else {
       // If the card is dropped between columns
+      const sourceColumn = columns.find(
+        (column) => column.id === sourceColumnId
+      );
+      const destinationColumn = columns.find(
+        (column) => column.id === destinationColumnId
+      );
+      if (!sourceColumn || !destinationColumn) return;
+
+      const sourceCards = [...sourceColumn.cards];
+      const destinationCards = [...destinationColumn.cards];
+      const [removed] = sourceCards.splice(cardPositionSource, 1);
+      destinationCards.splice(cardPositionDestination, 0, removed);
+
+      const newSourceColumn = {
+        ...sourceColumn,
+        cards: sourceCards,
+      };
+      const newDestinationColumn = {
+        ...destinationColumn,
+        cards: destinationCards,
+      };
+
+      const newColumns = [...columns];
+      newColumns.splice(sourceColumn.id - 1, 1, newSourceColumn);
+      newColumns.splice(destinationColumn.id - 1, 1, newDestinationColumn);
+      setColumns(newColumns);
     }
   };
 
