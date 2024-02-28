@@ -1,6 +1,8 @@
 export type Card = {
   id: number;
   content: string;
+  position: number;
+  columnId: number;
 };
 
 export type Column = {
