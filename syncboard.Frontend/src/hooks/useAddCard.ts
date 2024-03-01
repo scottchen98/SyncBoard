@@ -24,7 +24,7 @@ export default function useAddCard() {
         body: JSON.stringify(newCard),
       });
       if (!response.ok) {
-        throw new Error("Failed to update cards");
+        throw new Error("Failed to add a new card");
       }
     },
     onMutate: async ({ column }) => {
