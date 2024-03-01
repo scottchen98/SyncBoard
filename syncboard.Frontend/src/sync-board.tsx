@@ -1,51 +1,19 @@
 import { DragDropContext } from "react-beautiful-dnd";
 import type { OnDragEndResponder } from "react-beautiful-dnd";
+import { Loader2 } from "lucide-react";
 
-import { useState } from "react";
 import ColumnPanel from "./column-panel";
+import useFetchColumns from "./hooks/useFetchColumns";
+import useUpdateSyncBoard from "./hooks/useUpdateSyncBoard";
 
-const startColumns = [
-  {
-    id: 1,
-    name: "To Do",
-    cards: [
-      {
-        id: 1,
-        content: "This is the first card",
-      },
-      {
-        id: 2,
-        content: "This is the second card",
-      },
-    ],
-  },
-  {
-    id: 2,
-    name: "In Progress",
-    cards: [
-      {
-        id: 3,
-        content: "This is the third card",
-      },
-    ],
-  },
-  {
-    id: 3,
-    name: "Done",
-    cards: [
-      {
-        id: 4,
-        content: "This is the fourth card",
-      },
-    ],
-  },
-];
 export default function SyncBoard() {
-  const [columns, setColumns] = useState(startColumns);
+  const { columns, isLoading, error } = useFetchColumns();
+  const { updateSyncBoard } = useUpdateSyncBoard();
 
   const onDragEnd: OnDragEndResponder = (result) => {
-    const { source, destination } = result;
+    if (!columns) return;
 
+    const { source, destination } = result;
     if (!destination) return; // If dropped outside of a droppable area, do nothing
 
     const sourceColumnId = +source.droppableId;
@@ -62,16 +30,28 @@ export default function SyncBoard() {
     if (sourceColumnId === destinationColumnId) {
       const column = columns.find((column) => column.id === sourceColumnId);
       if (!column) return;
+
       const newCards = [...column.cards];
+      // Remove the card from the source position and add it to the destination position
       const [removed] = newCards.splice(cardPositionSource, 1);
       newCards.splice(cardPositionDestination, 0, removed);
+
+      // add columnId to reordered cards
+      newCards.forEach((card, index) => {
+        card.position = index;
+        card.columnId = sourceColumnId;
+      });
+
+      // Update the column with the reordered cards
       const newColumn = {
         ...column,
         cards: newCards,
       };
+
       const newColumns = [...columns];
+      // Replace the old column with the new column
       newColumns.splice(sourceColumnId - 1, 1, newColumn);
-      setColumns(newColumns);
+      updateSyncBoard({ newCards, newColumns });
     } else {
       // If the card is dropped between columns
       const sourceColumn = columns.find(
@@ -81,12 +61,24 @@ export default function SyncBoard() {
         (column) => column.id === destinationColumnId,
       );
       if (!sourceColumn || !destinationColumn) return;
-
       const sourceCards = [...sourceColumn.cards];
       const destinationCards = [...destinationColumn.cards];
+
+      // Remove the card from the source column and add it to the destination column
       const [removed] = sourceCards.splice(cardPositionSource, 1);
       destinationCards.splice(cardPositionDestination, 0, removed);
 
+      //add columnId to updated sourceCards and destinationCards
+      sourceCards.forEach((card, index) => {
+        card.position = index;
+        card.columnId = sourceColumnId;
+      });
+      destinationCards.forEach((card, index) => {
+        card.position = index;
+        card.columnId = destinationColumnId;
+      });
+
+      // Update the source and destination columns
       const newSourceColumn = {
         ...sourceColumn,
         cards: sourceCards,
@@ -96,10 +88,14 @@ export default function SyncBoard() {
         cards: destinationCards,
       };
 
+      // Update the columns with the new source and destination columns
       const newColumns = [...columns];
       newColumns.splice(sourceColumn.id - 1, 1, newSourceColumn);
       newColumns.splice(destinationColumn.id - 1, 1, newDestinationColumn);
-      setColumns(newColumns);
+      updateSyncBoard({
+        newCards: [...sourceCards, ...destinationCards],
+        newColumns,
+      });
     }
   };
 
@@ -109,11 +105,20 @@ export default function SyncBoard() {
         SyncBoard
       </h1>
       <DragDropContext onDragEnd={onDragEnd}>
-        <div className="flex flex-col items-center justify-center gap-10 px-5 md:flex-row md:items-start">
-          {columns.map((column) => (
-            <ColumnPanel key={column.id} column={column} />
-          ))}
-        </div>
+        {isLoading ? (
+          <Loader2 className="mx-auto h-12 w-12 animate-spin" />
+        ) : !error ? (
+          <div className="flex flex-col items-center justify-center gap-10 px-5 md:flex-row md:items-start">
+            {columns &&
+              columns.map((column) => (
+                <ColumnPanel key={column.id} column={column} />
+              ))}
+          </div>
+        ) : (
+          <p className="text-center font-medium text-red-500">
+            Some error has occurred.
+          </p>
+        )}
       </DragDropContext>
     </>
   );
