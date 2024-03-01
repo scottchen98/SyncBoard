@@ -1,4 +1,5 @@
 import { Draggable } from "react-beautiful-dnd";
+import { Trash2 } from "lucide-react";
 
 import type { Card } from "./types";
 
@@ -18,6 +19,9 @@ export default function CardItem({
           {...provided.draggableProps}
           {...provided.dragHandleProps}
         >
+          <button className="float-right" aria-label="Delete card">
+            <Trash2 className="text-red-500" size={24} />
+          </button>
           {card.content}
         </div>
       )}
