@@ -57,30 +57,32 @@ public class CardsController(DatabaseContext context) : ControllerBase
         return card;
     }
 
-    // PUT: api/Cards/5
-    [HttpPut("{id}")]
-    public async Task<IActionResult> PutCard(int id, UpdateCardDto card)
+    // PUT: api/Cards
+    [HttpPut]
+    public async Task<IActionResult> PutCard(List<UpdateCardDto> cards)
     {
-        var cardToUpdate = await _context.Cards.FindAsync(id);
-        if (cardToUpdate == null)
-        {
-            return NotFound();
-        }
-
-        cardToUpdate.Content = card.Content;
-        cardToUpdate.Position = card.Position;
-        cardToUpdate.ColumnId = card.ColumnId;
 
         try
         {
-            await _context.SaveChangesAsync();
-        }
-        catch (DbUpdateConcurrencyException) when (!CardExists(id))
-        {
-            return NotFound();
-        }
+            foreach (var card in cards)
+            {
+                var cardToUpdate = await _context.Cards.FindAsync(card.Id);
+                if (cardToUpdate == null)
+                {
+                    return NotFound();
+                }
 
-        return NoContent();
+                // Update the position and column id of the card to match the new order and column
+                cardToUpdate.Position = card.Position;
+                cardToUpdate.ColumnId = card.ColumnId;
+            }
+            await _context.SaveChangesAsync();
+            return NoContent();
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(500, $"Error: {ex.Message}");
+        }
     }
 
     // POST: api/Cards
