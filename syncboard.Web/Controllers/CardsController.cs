@@ -114,6 +114,25 @@ public class CardsController(DatabaseContext context) : ControllerBase
         _context.Cards.Remove(card);
         await _context.SaveChangesAsync();
 
+        // Update the position of the remaining cards from the same column
+        var column = await _context.Columns.Include(c => c.Cards).FirstOrDefaultAsync(c => c.Id == card.ColumnId);
+        if (column == null)
+        {
+            return NotFound();
+        }
+
+        var cards = column.Cards.ToList();
+        for (int i = 0; i < cards.Count; i++)
+        {
+            var cardToUpdate = await _context.Cards.FindAsync(cards[i].Id);
+            if (cardToUpdate == null)
+            {
+                return NotFound();
+            }
+
+            cardToUpdate.Position = i;
+        }
+        await _context.SaveChangesAsync();
         return NoContent();
     }
 
