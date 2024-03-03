@@ -39,7 +39,7 @@ export default function CardItem({
   };
 
   return (
-    <Draggable draggableId={`${cardId}`} index={index}>
+    <Draggable key={cardId} draggableId={`${cardId}`} index={index}>
       {(provided) => (
         <div
           className="mb-2 min-h-10 w-full break-words rounded-lg border-none bg-slate-50 p-2"
