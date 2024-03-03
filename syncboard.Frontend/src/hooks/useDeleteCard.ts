@@ -24,7 +24,6 @@ export default function useDeleteCard() {
       }
     },
     onMutate: async ({ newColumns }) => {
-      console.log("delete card: onMutate");
       // Cancel any outgoing refetches
       // (so they don't overwrite our optimistic update)
       await qc.cancelQueries({ queryKey: ["columns"] });
@@ -39,7 +38,6 @@ export default function useDeleteCard() {
       return { previousColumns };
     },
     onSuccess: () => {
-      console.log("delete card: onSuccess");
       // Invalidate the columns query
       qc.invalidateQueries({ queryKey: ["columns"] });
     },
