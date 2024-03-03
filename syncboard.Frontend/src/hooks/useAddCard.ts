@@ -37,6 +37,13 @@ export default function useAddCard() {
 
       // Optimistically update the columns
       qc.setQueryData(["columns"], (oldColumns: Column[]) => {
+        // get the largest card id from all columns
+        const maxCardId = Math.max(
+          ...oldColumns.flatMap((column) =>
+            column.cards.map((card) => card.id),
+          ),
+        );
+
         const newColumns = [...oldColumns];
         newColumns.splice(column.id - 1, 1, {
           ...column,
@@ -45,7 +52,7 @@ export default function useAddCard() {
             {
               // temporary id until we invalidate the query and
               // refetch the data with the new id from the server
-              id: column.cards.length + 1,
+              id: maxCardId + 1,
               content: "",
               position: column.cards.length,
               columnId: column.id,
