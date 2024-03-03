@@ -1,21 +1,33 @@
 import { Droppable } from "react-beautiful-dnd";
-import { Plus } from "lucide-react";
+import { Loader2, Plus } from "lucide-react";
 
+import { useState } from "react";
 import CardList from "./card-list";
 import type { Column } from "./types";
 import useAddCard from "./hooks/useAddCard";
 
 export default function ColumnPanel({ column }: { column: Column }) {
   const { id, name, cards } = column;
-  const { addCard } = useAddCard();
+  const { addCard, isAddingCard } = useAddCard();
+  const [cardContent, setCardContent] = useState("");
 
-  const newCardPosition = cards.length;
-  const handleAddCard = () => {
+  const handleAddCard = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    if (!cardContent) return;
+
+    const newCardPosition = cards.length;
     addCard({
-      newCard: { content: "", position: newCardPosition, columnId: id },
+      newCard: {
+        content: cardContent,
+        position: newCardPosition,
+        columnId: id,
+      },
       column,
     });
+
+    setCardContent("");
   };
+
   return (
     <Droppable droppableId={`${id}`}>
       {(provided, snapshot) => (
@@ -32,13 +44,25 @@ export default function ColumnPanel({ column }: { column: Column }) {
           <h2 className="mb-5 text-2xl font-semibold">{name}</h2>
           <CardList cards={cards} />
           {provided.placeholder}
-          <button
-            className="flex w-full gap-1 rounded-lg p-1 hover:bg-gray-300"
-            onClick={handleAddCard}
+          <form
+            className="flex items-center gap-2 pr-2"
+            onSubmit={handleAddCard}
           >
-            <Plus size={24} />
-            <span>New</span>
-          </button>
+            <input
+              type="text"
+              className={`flex w-full gap-1 rounded-lg ${snapshot.isDraggingOver ? "bg-[#ffc0cb]" : "bg-[#6495ed]"} p-1 placeholder:text-gray-600 hover:bg-gray-300 focus:outline-none`}
+              placeholder="New"
+              value={cardContent}
+              onChange={(e) => setCardContent(e.target.value)}
+              required
+            />
+            <button
+              disabled={isAddingCard}
+              className={`${isAddingCard && "cursor-not-allowed"}`}
+            >
+              {isAddingCard ? <Loader2 size={24} /> : <Plus size={24} />}
+            </button>
+          </form>
         </div>
       )}
     </Droppable>
