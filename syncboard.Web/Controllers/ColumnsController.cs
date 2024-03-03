@@ -26,7 +26,8 @@ public class ColumnsController(DatabaseContext context) : ControllerBase
                 {
                     Id = cd.Id,
                     Content = cd.Content,
-                    Position = cd.Position
+                    Position = cd.Position,
+                    ColumnId = cd.ColumnId
                 })
                 .OrderBy(c => c.Position).ToList()
         }).ToListAsync();
