@@ -12,7 +12,7 @@ export default function ColumnPanel({ column }: { column: Column }) {
   const newCardPosition = cards.length;
   const handleAddCard = () => {
     addCard({
-      newCard: { content: "New Card", position: newCardPosition, columnId: id },
+      newCard: { content: "", position: newCardPosition, columnId: id },
       column,
     });
   };
