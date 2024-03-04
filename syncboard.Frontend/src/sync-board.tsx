@@ -103,9 +103,6 @@ export default function SyncBoard() {
 
   return (
     <>
-      <h1 className="mb-14 mt-8 text-center text-5xl font-semibold">
-        SyncBoard
-      </h1>
       <DragDropContext onDragEnd={onDragEnd}>
         {isLoading ? (
           <Loader2 className="mx-auto h-12 w-12 animate-spin" />
