@@ -1,8 +1,10 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 import type { Card, Column } from "../types";
+import useSignalR from "./useSignalR";
 
 export default function useUpdateSyncBoard() {
+  const { connection } = useSignalR("/r/kanban");
   const qc = useQueryClient();
 
   const {
@@ -44,6 +46,7 @@ export default function useUpdateSyncBoard() {
     onSuccess: () => {
       // Invalidate the columns query
       qc.invalidateQueries({ queryKey: ["columns"] });
+      connection?.invoke("SendCard");
     },
     // If the mutation fails,
     // use the context returned from onMutate to roll back
