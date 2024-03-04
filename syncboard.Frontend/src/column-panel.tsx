@@ -35,9 +35,7 @@ export default function ColumnPanel({ column }: { column: Column }) {
           className="w-[80%] rounded-lg border-none p-2 shadow-lg"
           ref={provided.innerRef}
           style={{
-            backgroundColor: snapshot.isDraggingOver
-              ? "pink"
-              : "cornflowerblue",
+            backgroundColor: snapshot.isDraggingOver ? "#F0DBDB" : "#FEFCF3",
           }}
           {...provided.droppableProps}
         >
@@ -50,7 +48,7 @@ export default function ColumnPanel({ column }: { column: Column }) {
           >
             <input
               type="text"
-              className={`flex w-full gap-1 rounded-lg ${snapshot.isDraggingOver ? "bg-[#ffc0cb]" : "bg-[#6495ed]"} p-1 placeholder:text-gray-600 hover:bg-gray-300 focus:outline-none`}
+              className={`flex w-full gap-1 rounded-lg ${snapshot.isDraggingOver ? "bg-[#F0DBDB]" : "bg-[#FEFCF3]"} p-1 placeholder:text-gray-400 hover:bg-[#F5EBE0] focus:outline-none`}
               placeholder="New"
               value={cardContent}
               onChange={(e) => setCardContent(e.target.value)}
@@ -58,7 +56,7 @@ export default function ColumnPanel({ column }: { column: Column }) {
             />
             <button
               disabled={isAddingCard || cardContent === ""}
-              className={`${(isAddingCard || cardContent === "") && "cursor-not-allowed"} hover:text-gray-300`}
+              className={`${(isAddingCard || cardContent === "") && "cursor-not-allowed"} ${!isAddingCard && cardContent && "hover:text-gray-400"}`}
             >
               {isAddingCard ? <Loader2 size={24} /> : <Plus size={24} />}
             </button>
