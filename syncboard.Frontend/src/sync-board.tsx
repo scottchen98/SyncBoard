@@ -105,7 +105,7 @@ export default function SyncBoard() {
     <>
       <DragDropContext onDragEnd={onDragEnd}>
         {isLoading ? (
-          <Loader2 className="mx-auto h-12 w-12 animate-spin" />
+          <Loader2 className="mx-auto h-12 w-12 animate-spin text-white" />
         ) : !error ? (
           <div className="flex flex-col items-center justify-center gap-10 px-5 md:flex-row md:items-start">
             {columns &&

@@ -32,14 +32,14 @@ export default function ColumnPanel({ column }: { column: Column }) {
     <Droppable droppableId={`${id}`}>
       {(provided, snapshot) => (
         <div
-          className="w-[80%] rounded-lg border-none p-2 shadow-lg"
+          className="w-[80%] rounded-lg border-2 border-none border-sky-200 p-2 shadow-[0_0_2px_#fff,inset_0_0_2px_#fff,0_0_5px_#08f,0_0_15px_#08f,0_0_30px_#08f]"
           ref={provided.innerRef}
           style={{
-            backgroundColor: snapshot.isDraggingOver ? "#F0DBDB" : "#FEFCF3",
+            backgroundColor: snapshot.isDraggingOver ? "#635985" : "#18122B",
           }}
           {...provided.droppableProps}
         >
-          <h2 className="mb-5 text-2xl font-semibold">{name}</h2>
+          <h2 className="mb-5 text-2xl font-semibold text-sky-200">{name}</h2>
           <CardList cards={cards} />
           {provided.placeholder}
           <form
@@ -48,7 +48,7 @@ export default function ColumnPanel({ column }: { column: Column }) {
           >
             <input
               type="text"
-              className={`flex w-full gap-1 rounded-lg ${snapshot.isDraggingOver ? "bg-[#F0DBDB]" : "bg-[#FEFCF3]"} p-1 placeholder:text-gray-400 hover:bg-[#F5EBE0] focus:outline-none`}
+              className={`flex w-full gap-1 rounded-lg text-sky-200 ${snapshot.isDraggingOver ? "bg-[#635985]" : "bg-[#18122B]"} p-1 placeholder:text-gray-400 hover:bg-[#393053] focus:outline-none`}
               placeholder="New"
               value={cardContent}
               onChange={(e) => setCardContent(e.target.value)}
@@ -56,7 +56,7 @@ export default function ColumnPanel({ column }: { column: Column }) {
             />
             <button
               disabled={isAddingCard || cardContent === ""}
-              className={`${(isAddingCard || cardContent === "") && "cursor-not-allowed"} ${!isAddingCard && cardContent && "hover:text-gray-400"}`}
+              className={`${(isAddingCard || cardContent === "") && "cursor-not-allowed"} ${!isAddingCard && cardContent && "hover:text-gray-400"} text-sky-200`}
             >
               {isAddingCard ? <Loader2 size={24} /> : <Plus size={24} />}
             </button>

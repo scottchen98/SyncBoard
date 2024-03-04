@@ -42,7 +42,7 @@ export default function CardItem({
     <Draggable key={cardId} draggableId={`${cardId}`} index={index}>
       {(provided) => (
         <div
-          className="mb-2 min-h-10 w-full break-words rounded-lg border-none bg-[#F5EBE0] p-2"
+          className="mb-2 min-h-10 w-full break-words rounded-lg border-none bg-[#393053] p-2"
           ref={provided.innerRef}
           {...provided.draggableProps}
           {...provided.dragHandleProps}
@@ -54,7 +54,7 @@ export default function CardItem({
           >
             <Trash2 className="text-red-500" size={24} />
           </button>
-          {content}
+          <p className="text-sky-200">{content}</p>
         </div>
       )}
     </Draggable>
