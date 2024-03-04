@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using SyncBoard.Models;
+using SyncBoard.Hubs;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -20,7 +21,7 @@ builder.Services.AddDbContext<DatabaseContext>(
 );
 
 builder.Services.AddControllers();
-
+builder.Services.AddSignalR();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
@@ -33,6 +34,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.MapControllers();
+// prefix signalR rotuers with r
+app.MapHub<KanbanHub>("/r/kanban");
 
 app.MapGet("/", () => "Hello World!");
 
