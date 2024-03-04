@@ -37,6 +37,8 @@ app.MapControllers();
 // prefix signalR rotuers with r
 app.MapHub<KanbanHub>("/r/kanban");
 
-app.MapGet("/", () => "Hello World!");
+app.UseDefaultFiles();
+app.UseStaticFiles();
+app.MapFallbackToFile("index.html");
 
 app.Run();
