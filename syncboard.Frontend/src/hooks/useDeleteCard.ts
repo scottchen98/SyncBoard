@@ -40,6 +40,8 @@ export default function useDeleteCard() {
     onSuccess: () => {
       // Invalidate the columns query
       qc.invalidateQueries({ queryKey: ["columns"] });
+
+      // --> *instead of invoking the signalR connection here, we broadcast the event from the server*
     },
     // If the mutation fails,
     // use the context returned from onMutate to roll back

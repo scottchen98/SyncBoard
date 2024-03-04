@@ -2,14 +2,17 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SyncBoard.Models;
 using SyncBoard.Dtos;
+using Microsoft.AspNetCore.SignalR;
+using SyncBoard.Hubs;
 
 namespace SyncBoard.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
-public class CardsController(DatabaseContext context) : ControllerBase
+public class CardsController(DatabaseContext context, IHubContext<KanbanHub> hub) : ControllerBase
 {
     private readonly DatabaseContext _context = context;
+    private readonly IHubContext<KanbanHub> _hub = hub;
 
     // GET: api/Cards
     [HttpGet]
@@ -133,6 +136,7 @@ public class CardsController(DatabaseContext context) : ControllerBase
             cardToUpdate.Position = i;
         }
         await _context.SaveChangesAsync();
+        await _hub.Clients.All.SendAsync("InvalidateColumns");
         return NoContent();
     }
 
