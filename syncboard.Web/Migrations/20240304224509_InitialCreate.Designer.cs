@@ -11,7 +11,7 @@ using SyncBoard.Models;
 namespace syncboard.Web.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    [Migration("20240227044114_InitialCreate")]
+    [Migration("20240304224509_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
