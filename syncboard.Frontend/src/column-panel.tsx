@@ -57,8 +57,8 @@ export default function ColumnPanel({ column }: { column: Column }) {
               required
             />
             <button
-              disabled={isAddingCard}
-              className={`${isAddingCard && "cursor-not-allowed"}`}
+              disabled={isAddingCard || cardContent === ""}
+              className={`${(isAddingCard || cardContent === "") && "cursor-not-allowed"} hover:text-gray-300`}
             >
               {isAddingCard ? <Loader2 size={24} /> : <Plus size={24} />}
             </button>
