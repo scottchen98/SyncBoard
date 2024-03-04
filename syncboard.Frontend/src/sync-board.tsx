@@ -5,10 +5,12 @@ import { Loader2 } from "lucide-react";
 import ColumnPanel from "./column-panel";
 import useFetchColumns from "./hooks/useFetchColumns";
 import useUpdateSyncBoard from "./hooks/useUpdateSyncBoard";
+import useInvalidateColumns from "./hooks/useInvalidateColumns";
 
 export default function SyncBoard() {
   const { columns, isLoading, error } = useFetchColumns();
   const { updateSyncBoard } = useUpdateSyncBoard();
+  useInvalidateColumns();
 
   const onDragEnd: OnDragEndResponder = (result) => {
     if (!columns) return;
