@@ -58,7 +58,11 @@ export default function ColumnPanel({ column }: { column: Column }) {
               disabled={isAddingCard || cardContent === ""}
               className={`${(isAddingCard || cardContent === "") && "cursor-not-allowed"} ${!isAddingCard && cardContent && "hover:text-gray-400"} text-sky-200`}
             >
-              {isAddingCard ? <Loader2 size={24} /> : <Plus size={24} />}
+              {isAddingCard ? (
+                <Loader2 className="animate-spin" size={24} />
+              ) : (
+                <Plus size={24} />
+              )}
             </button>
           </form>
         </div>
