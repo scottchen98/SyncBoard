@@ -1,5 +1,5 @@
 <p align="center">
-  <img width="850" alt="SyncBoard-title" src="https://github.com/scottchen98/SyncBoard/assets/103295581/b873c551-c3fe-47f6-9661-9ca66d6bfe54">
+  <img width="850" alt="syncBoard" src="https://github.com/scottchen98/SyncBoard/assets/103295581/10db55a3-5df9-4ea3-a7c3-9f51b714c5a8">
 </p>
 
 # Project Overview
